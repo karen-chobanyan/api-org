@@ -1,0 +1,7 @@
+.idea/
+runtime/
+!runtime/.gitignore
+vendor/
+config/database.php
+
+

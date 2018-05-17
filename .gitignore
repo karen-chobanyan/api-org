@@ -3,5 +3,5 @@ runtime/
 !runtime/.gitignore
 vendor/
 config/database.php
-
+config/keys.php
 

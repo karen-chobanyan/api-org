@@ -35,6 +35,9 @@ abstract class ApiController extends Controller
     {
         $behaviors = parent::behaviors();
 
+        // remove authentication filter
+        unset($behaviors['authenticator']);
+
         $behaviors['cors'] = [
             'class' => Cors::class,
         ];

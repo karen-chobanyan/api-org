@@ -43,7 +43,7 @@ return [
             ],
         ],
         'user'       => [
-            'identityClass' => 'app\common\models\User',
+            'identityClass' => 'app\common\models\UserModel',
             'enableSession' => false,
         ],
         'db'         => $db,

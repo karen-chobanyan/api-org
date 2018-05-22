@@ -13,7 +13,7 @@ use yii\web\IdentityInterface;
  * @property string $password [varchar(255)]
  * @property void $authKey
  */
-class User extends ActiveRecord implements IdentityInterface
+class UserModel extends ActiveRecord implements IdentityInterface
 {
     /**
      * {@inheritdoc}

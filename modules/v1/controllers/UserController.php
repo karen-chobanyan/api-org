@@ -4,7 +4,7 @@ namespace app\modules\v1\controllers;
 
 use app\common\components\Jwt;
 use app\common\controllers\ApiController;
-use app\common\models\User;
+use app\common\models\UserModel;
 use tuyakhov\jsonapi\tests\data\ResourceModel;
 use yii\di\Instance;
 
@@ -27,7 +27,7 @@ class UserController extends ApiController
      */
     public function actionIndex()
     {
-        $user = User::findOne(1);
+        $user = UserModel::findOne(1);
         $token = null;
         if (!empty($user)) {
             $jwt = Instance::ensure('jwt', Jwt::class);

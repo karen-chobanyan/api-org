@@ -5,8 +5,10 @@ namespace app\modules\v1\controllers;
 use app\common\components\Jwt;
 use app\common\controllers\ApiController;
 use app\common\models\UserModel;
+use app\modules\v1\models\UserResource;
 use tuyakhov\jsonapi\tests\data\ResourceModel;
 use yii\di\Instance;
+use yii\web\NotFoundHttpException;
 
 class UserController extends ApiController
 {
@@ -41,6 +43,24 @@ class UserController extends ApiController
         $token = $jwt->loadToken($str_token);
 
         return ['token' => $str_token, 'uid' => $token->getClaim('uid')];
+    }
+
+    /**
+     * @param $id
+     * @return null|UserResource
+     * @throws NotFoundHttpException
+     */
+    public function actionView($id)
+    {
+        if (!empty($id)) {
+            $resource = UserResource::findOne($id);
+
+            if (!empty($resource)) {
+                return $resource;
+            }
+        }
+
+        throw new NotFoundHttpException();
     }
 
     public function actionTest()

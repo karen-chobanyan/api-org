@@ -52,5 +52,14 @@ return [
             'privateKeyFile' => $keys['privateKeyFile'],
             'publicKeyFile'  => $keys['publicKeyFile'],
         ],
+        'response' => [
+            'formatters' => [
+                \yii\web\Response::FORMAT_JSON => [
+                    'class' => 'tuyakhov\jsonapi\JsonApiResponseFormatter',
+                    'prettyPrint' => YII_DEBUG,
+                    'encodeOptions' => JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE,
+                ],
+            ],
+        ],
     ],
 ];

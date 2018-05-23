@@ -9,7 +9,10 @@ use yii\web\Response;
 
 abstract class ApiController extends Controller
 {
-    public $serializer = 'tuyakhov\jsonapi\Serializer';
+    public $serializer = [
+        'class'     => 'tuyakhov\jsonapi\Serializer',
+        'pluralize' => false,
+    ];
 
     public function actions()
     {
@@ -48,7 +51,8 @@ abstract class ApiController extends Controller
         ];
 
         $behaviors['contentNegotiator']['formats'] = [
-            'application/json' => Response::FORMAT_JSON,
+            'application/json'         => Response::FORMAT_JSON,
+            'application/vnd.api+json' => Response::FORMAT_JSON,
         ];
 
         return $behaviors;

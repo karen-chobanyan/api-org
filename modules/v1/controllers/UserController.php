@@ -4,11 +4,15 @@ namespace app\modules\v1\controllers;
 
 use app\common\components\Jwt;
 use app\common\controllers\ApiController;
-use app\common\models\UserModel;
+use app\modules\v1\models\TokenResource;
 use app\modules\v1\models\UserResource;
+use Lcobucci\JWT\Token;
 use tuyakhov\jsonapi\tests\data\ResourceModel;
+use Yii;
 use yii\di\Instance;
+use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\UnauthorizedHttpException;
 
 class UserController extends ApiController
 {
@@ -18,31 +22,62 @@ class UserController extends ApiController
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator']['except'][] = 'index';
+        $behaviors['authenticator']['except'][] = 'token';
 
         return $behaviors;
     }
 
     /**
-     * @return array
+     * @return TokenResource
+     * @throws BadRequestHttpException
+     * @throws UnauthorizedHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function actionIndex()
+    public function actionToken()
     {
-        $user = UserModel::findOne(1);
-        $token = null;
-        if (!empty($user)) {
-            $jwt = Instance::ensure('jwt', Jwt::class);
-            $token = $jwt->createToken($user);
+        $request = Yii::$app->getRequest();
+        $data = $request->getBodyParams();
+
+        /**
+         * Input data validation
+         */
+        if (empty($data['User'])) {
+            throw new BadRequestHttpException();
         }
 
+        $data = $data['User'];
+        if (empty($data['login'])) {
+            throw new BadRequestHttpException();
+        }
 
+        if (empty($data['password'])) {
+            throw new BadRequestHttpException();
+        }
 
-        $str_token = (string) $token;
+        $user = UserResource::findOne(['login' => $data['login']]);
+        if (empty($user)) {
+            throw new UnauthorizedHttpException();
+        }
 
-        $token = $jwt->loadToken($str_token);
+        if (!Yii::$app->getSecurity()->validatePassword($data['password'], $user->password)) {
+            throw new UnauthorizedHttpException();
+        }
 
-        return ['token' => $str_token, 'uid' => $token->getClaim('uid')];
+        /**
+         * @var Jwt $jwt
+         */
+        $jwt = Instance::ensure('jwt', Jwt::class);
+        /**
+         * @var Token $token
+         */
+        $token = $jwt->createToken($user);
+
+        $resource = new TokenResource();
+        $resource->token = (string)$token;
+        $resource->expired = $token->getClaim('exp', 0);
+        $resource->setResourceRelationship('user', $user);
+
+        return $resource;
     }
 
     /**

@@ -15,6 +15,9 @@ return [
     'components' => [
         'request'    => [
             'enableCsrfCookie' => false,
+            'parsers'          => [
+                'application/vnd.api+json' => 'tuyakhov\jsonapi\JsonApiParser',
+            ],
         ],
         'log'        => [
             'traceLevel'    => YII_DEBUG ? 3 : 0,
@@ -36,8 +39,8 @@ return [
                     'class'         => 'yii\rest\UrlRule',
                     'controller'    => 'v1/user',
                     'extraPatterns' => [
-                        'GET test'     => 'test',
-                        'OPTIONS test' => 'options',
+                        'POST token'     => 'token',
+                        'OPTIONS token' => 'options',
                     ],
                 ],
             ],
@@ -52,11 +55,11 @@ return [
             'privateKeyFile' => $keys['privateKeyFile'],
             'publicKeyFile'  => $keys['publicKeyFile'],
         ],
-        'response' => [
+        'response'   => [
             'formatters' => [
                 \yii\web\Response::FORMAT_JSON => [
-                    'class' => 'tuyakhov\jsonapi\JsonApiResponseFormatter',
-                    'prettyPrint' => YII_DEBUG,
+                    'class'         => 'tuyakhov\jsonapi\JsonApiResponseFormatter',
+                    'prettyPrint'   => YII_DEBUG,
                     'encodeOptions' => JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE,
                 ],
             ],

@@ -10,7 +10,7 @@ use yii\web\Response;
 abstract class ApiController extends Controller
 {
     public $serializer = [
-        'class'     => 'tuyakhov\jsonapi\Serializer',
+        'class'     => 'app\common\components\Serializer',
         'pluralize' => false,
     ];
 

@@ -64,5 +64,8 @@ return [
                 ],
             ],
         ],
+        'errorHandler' => [
+          'class' => 'app\common\components\ErrorHandler',
+        ],
     ],
 ];

@@ -38,9 +38,12 @@ return [
                 [
                     'class'         => 'yii\rest\UrlRule',
                     'controller'    => 'v1/org-types',
+                    
                 ],
-                'v1/organizations/<id:\d+>' => 'v1/organizations/view',
-                'v1/organizations/' => 'v1/organizations',
+                [
+                    'class'         => 'yii\rest\UrlRule',                   
+                    'controller'    => 'v1/organizations',
+                ],
             ],
         ],
         'user'       => [

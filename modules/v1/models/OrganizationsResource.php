@@ -24,16 +24,15 @@ class OrganizationsResource extends OrganizationsModel implements ResourceInterf
     /**
      * @var array
      */
-    protected $excludedFields = [
-        'password',
-    ];
+    protected $excludedFields = [];
+    protected $relationships = [];
 
     /**
      * @return string
      */
     public function getType()
     {
-        return 'organizations';
+        return 'organization';
     }
 
     /**
@@ -63,7 +62,7 @@ class OrganizationsResource extends OrganizationsModel implements ResourceInterf
     public function getLinks()
     {
         return [
-            Link::REL_SELF => Url::to(Url::base(true).'/v1/organizations/'.$this->getId()),
+            Link::REL_SELF => Url::to(Url::base(true).'/v1/organizations/'.$this->getId())
         ];
     }
 
@@ -73,20 +72,7 @@ class OrganizationsResource extends OrganizationsModel implements ResourceInterf
      */
     public function getRelationshipLinks($name)
     {
-        $primaryLinks = $this->getLinks();
-        if (!array_key_exists(Link::REL_SELF, $primaryLinks)) {
-            return [];
-        }
-
-        $resourceLink = is_string($primaryLinks[Link::REL_SELF]) ? rtrim($primaryLinks[Link::REL_SELF], '/') : null;
-        if (!$resourceLink) {
-            return [];
-        }
-
-        return [
-            Link::REL_SELF => "{$resourceLink}/relationships/{$name}",
-            'related'      => "{$resourceLink}/{$name}",
-        ];
+        return [];
     }
 
     /**
@@ -95,7 +81,7 @@ class OrganizationsResource extends OrganizationsModel implements ResourceInterf
      */
     public function getResourceRelationships(array $linked = [])
     {
-        return [];
+        return $this->relationships;
     }
 
     /**
@@ -104,6 +90,8 @@ class OrganizationsResource extends OrganizationsModel implements ResourceInterf
      */
     public function setResourceRelationship($name, $relationship)
     {
+        $this->relationships[$name] = $relationship;
+        return $this;
     }
 
 }

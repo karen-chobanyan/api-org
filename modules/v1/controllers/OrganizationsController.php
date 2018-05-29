@@ -5,35 +5,24 @@ namespace app\modules\v1\controllers;
 use app\common\components\Jwt;
 use app\common\controllers\ApiController;
 use app\modules\v1\models\OrganizationsResource;
-use Lcobucci\JWT\Token;
+use app\modules\v1\models\OrgTypeResource;
 use tuyakhov\jsonapi\tests\data\ResourceModel;
 use Yii;
-use yii\di\Instance;
-use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
-use yii\web\UnauthorizedHttpException;
+use app\modules\v1\models\OrganizationsSearch;
+use yii\web\Response;
 
 class OrganizationsController extends ApiController
 {
     /**
      * {@inheritdoc}
      */
-    // public function behaviors()
-    // {
-    //     $behaviors = parent::behaviors();
-    //     // $behaviors['authenticator']['except'][] = 'token';
-
-    //     return $behaviors;
-    // }
-
     public function actionIndex(){
-        $resource = OrganizationsResource::find()->all();
-
-        if (!empty($resource)) {
-            return $resource;
-        } 
-        
-        throw new NotFoundHttpException();
+        $request = Yii::$app->getRequest();
+        $params = $request->queryParams;
+        $modelSearch = new OrganizationsSearch();
+        $res = $modelSearch->search($params);
+        return $res;
     }
 
     /**
@@ -46,7 +35,10 @@ class OrganizationsController extends ApiController
         if (!empty($id)) {
             $resource = OrganizationsResource::findOne($id);
 
+            $orgType = OrgTypeResource::findOne(['id_org_type' => $resource['id_org_type']]);
+            
             if (!empty($resource)) {
+                $resource->setResourceRelationship('orgtype', $orgType);
                 return $resource;
             }
         }

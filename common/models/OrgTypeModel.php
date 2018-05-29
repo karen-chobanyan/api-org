@@ -29,7 +29,7 @@ class OrgTypeModel extends ActiveRecord implements OrgTypeInterface
     public function rules()
     {
         return [
-          [['name', 'description'], 'required'],
+          [['name'], 'required'],
           ['name', 'string', 'max' => 50],
           ['description', 'string', 'max' => 255],
         ];

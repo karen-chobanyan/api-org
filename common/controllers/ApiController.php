@@ -45,10 +45,10 @@ abstract class ApiController extends Controller
             'class' => Cors::class,
         ];
 
-        $behaviors['authenticator'] = [
-            'class'  => JwtHttpBearerAuth::class,
-            'except' => ['options'],
-        ];
+        // $behaviors['authenticator'] = [
+        //     'class'  => JwtHttpBearerAuth::class,
+        //     'except' => ['options'],
+        // ];
 
         $behaviors['contentNegotiator']['formats'] = [
             'application/json'         => Response::FORMAT_JSON,

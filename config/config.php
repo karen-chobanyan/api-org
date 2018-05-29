@@ -37,11 +37,7 @@ return [
             'rules'               => [
                 [
                     'class'         => 'yii\rest\UrlRule',
-                    'controller'    => 'v1/user',
-                    'extraPatterns' => [
-                        'POST token'     => 'token',
-                        'OPTIONS token' => 'options',
-                    ],
+                    'controller'    => 'v1/org-types',
                 ],
                 'v1/organizations/<id:\d+>' => 'v1/organizations/view',
                 'v1/organizations/' => 'v1/organizations',

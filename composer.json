@@ -9,5 +9,12 @@
       "type": "composer",
       "url": "https://asset-packagist.org"
     }
-  ]
+  ],
+  "require-dev": {
+    "codeception/base": "^2.4",
+    "codeception/specify": "^1.1",
+    "codeception/verify": "^1.0",
+    "guzzlehttp/guzzle": "^6.3",
+    "flow/jsonpath": "*"
+  }
 }

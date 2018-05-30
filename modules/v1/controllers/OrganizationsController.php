@@ -5,7 +5,6 @@ namespace app\modules\v1\controllers;
 use app\common\components\Jwt;
 use app\common\controllers\ApiController;
 use app\modules\v1\models\OrganizationsResource;
-use app\modules\v1\models\OrgTypeResource;
 use tuyakhov\jsonapi\tests\data\ResourceModel;
 use Yii;
 use yii\web\NotFoundHttpException;
@@ -35,20 +34,14 @@ class OrganizationsController extends ApiController
         if (!empty($id)) {
             $resource = OrganizationsResource::findOne($id);
 
-            $orgType = OrgTypeResource::findOne(['id_org_type' => $resource['id_org_type']]);
-            
-            if (!empty($resource)) {
+            $orgType = $resource->orgtype;
+
                 $resource->setResourceRelationship('orgtype', $orgType);
                 return $resource;
-            }
+
         }
 
         throw new NotFoundHttpException();
-    }
-
-    public function actionTest()
-    {
-        return new ResourceModel();
     }
 
 }

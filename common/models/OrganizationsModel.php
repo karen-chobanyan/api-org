@@ -7,12 +7,6 @@ use Lcobucci\JWT\Token;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
-/**
- * @property string $id [integer]
- * @property string $login [varchar(255)]
- * @property string $password [varchar(255)]
- * @property void $authKey
- */
 class OrganizationsModel extends ActiveRecord 
 {
     /**
@@ -23,30 +17,6 @@ class OrganizationsModel extends ActiveRecord
         return 'organizations';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function findIdentity($id)
-    {
-        return static::findOne($id);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        if (!$token instanceof Token) {
-            return null;
-        }
-
-        $uid = $token->getClaim('uid');
-        if (empty($uid)) {
-            return null;
-        }
-
-        return static::findOne($uid);
-    }
 
     /**
      * {@inheritdoc}
@@ -56,18 +26,5 @@ class OrganizationsModel extends ActiveRecord
         return $this->id;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getAuthKey()
-    {
-    }
-
-    // /**
-    //  * {@inheritdoc}
-    //  */
-    public function validateAuthKey($authKey)
-    {
-    }
 
 }

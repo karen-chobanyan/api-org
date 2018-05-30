@@ -5,8 +5,10 @@ namespace app\modules\v1\models;
 
 
 use app\common\models\OrganizationsModel;
+use app\common\models\OrgTypeModel;
 use tuyakhov\jsonapi\LinksInterface;
 use tuyakhov\jsonapi\ResourceInterface;
+use yii\db\ActiveRecord;
 use yii\helpers\Inflector;
 use yii\helpers\Url;
 use yii\web\Link;
@@ -18,7 +20,7 @@ use yii\web\Link;
  * @property array $links
  * @property string $type
  */
-class OrganizationsResource extends OrganizationsModel implements ResourceInterface, LinksInterface
+class OrganizationsResource extends ActiveRecord  implements ResourceInterface, LinksInterface
 {
 
     /**
@@ -33,6 +35,23 @@ class OrganizationsResource extends OrganizationsModel implements ResourceInterf
     public function getType()
     {
         return 'organization';
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public static function tableName()
+    {
+        return 'organizations';
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrgtype()
+    {
+
+        return $this->hasOne( OrgTypeModel::className(), ['id_org_type' => 'id_org_type']);
     }
 
     /**
@@ -94,4 +113,12 @@ class OrganizationsResource extends OrganizationsModel implements ResourceInterf
         return $this;
     }
 
+    /**
+     * The "id" member of a resource object.
+     * @return string an ID that in pair with type uniquely identifies the resource.
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 }

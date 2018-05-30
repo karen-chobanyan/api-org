@@ -28,6 +28,21 @@ class OrganizationResource extends ActiveRecord  implements LinksInterface, Reso
     protected $excludedFields = [];
     protected $relationships = [];
 
+
+    public function rules()
+    {
+        return [
+            [['name'], 'required'],
+            ['parent_id', 'integer', 'max' => 11],
+            ['id_org_type', 'integer', 'max' => 11],
+            ['short_name', 'string', 'max' => 255],
+            ['inn', 'string', 'max' => 255],
+            ['kpp', 'string', 'max' => 255],
+            ['ogrn', 'string', 'max' => 255],
+
+        ];
+    }
+
     /**
      * @return string
      */

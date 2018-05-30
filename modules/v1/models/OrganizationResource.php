@@ -4,7 +4,6 @@
 namespace app\modules\v1\models;
 
 
-use app\common\models\OrganizationsModel;
 use app\common\models\OrgTypeModel;
 use tuyakhov\jsonapi\LinksInterface;
 use tuyakhov\jsonapi\ResourceInterface;
@@ -14,13 +13,13 @@ use yii\helpers\Url;
 use yii\web\Link;
 
 /**
- * Class OrganizationsResource
+ * Class OrganizationResource
  * @package app\modules\v1\models
  *
  * @property array $links
  * @property string $type
  */
-class OrganizationsResource extends ActiveRecord  implements ResourceInterface, LinksInterface
+class OrganizationResource extends ActiveRecord  implements LinksInterface, ResourceInterface
 {
 
     /**

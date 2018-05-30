@@ -66,7 +66,7 @@ class OrganizationsSearch extends Model
             }
         }
 
-        $query = OrganizationsResource::find();
+        $query = OrganizationResource::find();
         $dataProvider = new ActiveDataProvider([
           'query' => $query,
           'pagination' => [
